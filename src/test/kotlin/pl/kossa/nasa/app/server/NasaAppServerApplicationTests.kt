@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.NasaAppServer
+package pl.kossa.nasa.app.server
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
