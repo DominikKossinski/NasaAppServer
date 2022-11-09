@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.NasaAppServer
+package pl.kossa.nasa.app.server
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
