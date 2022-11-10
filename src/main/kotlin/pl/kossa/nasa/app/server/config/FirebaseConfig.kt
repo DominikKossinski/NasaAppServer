@@ -5,8 +5,10 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
+import org.springframework.stereotype.Component
 import java.io.FileInputStream
 
+@Component
 class FirebaseConfig {
 
     @Bean
