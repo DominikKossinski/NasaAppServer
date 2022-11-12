@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.config
+package pl.kossa.nasa.app.server.config.security
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.google.firebase.auth.FirebaseAuthException

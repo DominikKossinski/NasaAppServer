@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.config
+package pl.kossa.nasa.app.server.config.security
 
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
