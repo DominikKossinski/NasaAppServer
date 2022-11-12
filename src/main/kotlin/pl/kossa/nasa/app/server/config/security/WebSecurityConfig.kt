@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.config
+package pl.kossa.nasa.app.server.config.security
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -35,6 +35,18 @@ class WebSecurityConfig {
             .authenticationEntryPoint(unauthorizedHandler)
             .and()
             .authorizeRequests()
+            .antMatchers(
+                HttpMethod.GET,
+                "/v3/api-docs",
+                "/v3/api-docs/**",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/**",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/webjars/**",
+                "/csrf"
+            ).permitAll()
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .anyRequest().authenticated()
             .and()
