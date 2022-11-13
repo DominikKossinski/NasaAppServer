@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -34,6 +34,8 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.12")
 	implementation("org.springdoc:springdoc-openapi-security:1.6.12")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.12")
+
+	runtimeOnly("mysql:mysql-connector-java:8.0.30")
 }
 
 tasks.withType<KotlinCompile> {
