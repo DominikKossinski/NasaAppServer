@@ -35,7 +35,9 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-security:1.6.12")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.12")
 
+	// DB Drivers
 	runtimeOnly("mysql:mysql-connector-java:8.0.30")
+	testImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
