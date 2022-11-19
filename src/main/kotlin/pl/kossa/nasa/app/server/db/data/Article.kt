@@ -1,4 +1,4 @@
-package pl.kossa.nasa.app.server.data.models
+package pl.kossa.nasa.app.server.db.data
 
 import java.util.*
 

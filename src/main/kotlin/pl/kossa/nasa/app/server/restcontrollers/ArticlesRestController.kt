@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import pl.kossa.nasa.app.server.architecture.BaseRestController
-import pl.kossa.nasa.app.server.data.models.Article
-import pl.kossa.nasa.app.server.data.models.NasaMediaType
+import pl.kossa.nasa.app.server.db.data.Article
+import pl.kossa.nasa.app.server.db.data.NasaMediaType
 import java.util.*
 
 @RestController
