@@ -14,8 +14,10 @@ class ArticlesService {
     @Autowired
     protected lateinit var articlesRepository: ArticlesRepository
 
+    // TODO check move to date range and download missing from NASA
     fun getArticlesByPage(pageable: Pageable) = articlesRepository.findAll(pageable)
 
+    // TODO download article from NASA if not in DB
     fun getArticleByDate(date: Date) =
         articlesRepository.findByIdOrNull(date) ?: throw NotFoundException("Article from date $date not found")
 }
