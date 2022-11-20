@@ -38,6 +38,10 @@ dependencies {
 	// DB Drivers
 	runtimeOnly("mysql:mysql-connector-java:8.0.30")
 	testImplementation("com.h2database:h2")
+
+	// Retrofit
+	implementation("com.squareup.retrofit2:retrofit:2.9.0")
+	implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 }
 
 tasks.withType<KotlinCompile> {
