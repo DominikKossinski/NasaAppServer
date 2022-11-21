@@ -5,6 +5,7 @@ import com.google.api.client.http.HttpStatusCodes
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
+import org.slf4j.LoggerFactory
 import pl.kossa.nasa.app.server.exceptions.UnauthorizedException
 import pl.kossa.nasa.app.server.nasa.exceptions.ApiServerException
 import pl.kossa.nasa.app.server.nasa.models.ApiError
@@ -16,15 +17,19 @@ import retrofit2.Response
 import java.io.IOException
 import java.lang.UnsupportedOperationException
 import java.net.http.HttpResponse
+import java.util.logging.Logger
 
 class ApiCall<S : Any>(
     private val delegate: Call<S>,
     private val errorConverter: Converter<ResponseBody, ApiErrorBody>
 ) : Call<ApiResponse<S>> {
 
+    private val logger = LoggerFactory.getLogger(this::class.java)
     override fun enqueue(callback: Callback<ApiResponse<S>>) {
         return delegate.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
+                logger.info("Request: ${call.request().url}")
+                logger.info("Response: ${response.code()} ${response.body()}")
                 if (response.isSuccessful) {
                     callback.onResponse(
                         this@ApiCall,

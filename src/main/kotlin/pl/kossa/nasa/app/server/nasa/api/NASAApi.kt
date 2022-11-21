@@ -7,13 +7,13 @@ import retrofit2.http.Query
 
 interface NASAApi {
 
-    @GET("/planetry/apod")
+    @GET("planetary/apod")
     suspend fun getArticle(
         @Query("date") date: String,
         @Query("api_key") apiKey: String
     ): ApiResponse<NASAArticle>
 
-    @GET("/planetry/apod")
+    @GET("planetary/apod")
     suspend fun getArticles(
         @Query("api_key") apikey: String,
         @Query("start_date") start_date: String,

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.repository.Query
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 import pl.kossa.nasa.app.server.architecture.BaseRestController
 import pl.kossa.nasa.app.server.db.data.Article
 import pl.kossa.nasa.app.server.db.data.NasaMediaType
+import pl.kossa.nasa.app.server.extensions.toApiString
 import pl.kossa.nasa.app.server.services.ArticlesService
 import java.util.*
 
@@ -31,8 +33,9 @@ class ArticlesRestController : BaseRestController() {
         return articlesService.getArticlesByPage(PageRequest.of(page, pageSize))
     }
 
-    @GetMapping("/api/articles/{date}")
-    suspend fun getArticleByDate(@PathVariable("date") date: Date): Article {
+    @GetMapping("/{date}")
+    suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern ="yyyy-MM-dd") date: Date): Article {
+        logger.info("GetArticle: date: $date ApiString ${date.toApiString()}")
         return articlesService.getArticleByDate(date)
     }
 }

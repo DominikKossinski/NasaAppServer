@@ -4,6 +4,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun Date.toApiString(): String {
-    val formatter = SimpleDateFormat("YYYY-mm-dd")
+    val formatter = SimpleDateFormat("YYYY-MM-dd")
     return formatter.format(this)
 }
