@@ -27,14 +27,14 @@ class ArticlesRestController : BaseRestController() {
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     suspend fun getArticles(
-        @RequestParam("page") page: Int,
-        @RequestParam("pageSize", required = false, defaultValue = "30") pageSize: Int = 30
-    ): Page<Article> {
-        return articlesService.getArticlesByPage(PageRequest.of(page, pageSize))
+        @RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") from: Date,
+        @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") to: Date
+    ): List<Article> {
+        return articlesService.getArticlesByPage(from, to)
     }
 
     @GetMapping("/{date}")
-    suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern ="yyyy-MM-dd") date: Date): Article {
+    suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date): Article {
         logger.info("GetArticle: date: $date ApiString ${date.toApiString()}")
         return articlesService.getArticleByDate(date)
     }
