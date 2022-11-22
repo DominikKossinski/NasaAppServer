@@ -15,8 +15,8 @@ interface NASAApi {
 
     @GET("planetary/apod")
     suspend fun getArticles(
-        @Query("api_key") apikey: String,
         @Query("start_date") start_date: String,
-        @Query("end_date") endDate: String
+        @Query("end_date") endDate: String,
+        @Query("api_key") apikey: String
     ): ApiResponse<List<NASAArticle>>
 }
