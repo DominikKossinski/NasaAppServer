@@ -13,7 +13,7 @@ import javax.persistence.Table
 @Table(name = "Articles")
 data class Article(
     @Id
-    @Column(name = "id", columnDefinition = "timestamp")
+    @Column(name = "date", columnDefinition = "timestamp")
     val date: Date,
     @Column(name = "explanation", columnDefinition = "varchar(2000)")
     val explanation: String,
