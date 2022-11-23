@@ -67,7 +67,6 @@ class ArticlesRestController : BaseRestController() {
         ]
     )
     suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date): Article {
-        logger.info("GetArticle: date: $date ApiString ${date.toApiString()}")
         return articlesService.getArticleByDate(date)
     }
 }
