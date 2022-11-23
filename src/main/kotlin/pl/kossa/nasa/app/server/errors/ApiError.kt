@@ -12,3 +12,16 @@ class UnauthorizedError : ApiError() {
     override val description: String
         get() = "Unauthorized"
 }
+
+class ForbiddenError : ApiError() {
+    override val message: String
+        get() = "Forbidden"
+
+    override val description: String
+        get() = "Forbidden"
+}
+
+class NotFoundError(override val description: String): ApiError() {
+    override val message: String
+        get() = "NotFound"
+}
