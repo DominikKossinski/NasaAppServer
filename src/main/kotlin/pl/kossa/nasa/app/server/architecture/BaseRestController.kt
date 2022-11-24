@@ -8,9 +8,9 @@ import pl.kossa.nasa.app.server.errors.UnauthorizedError
 import pl.kossa.nasa.app.server.exceptions.UnauthorizedException
 import pl.kossa.nasa.app.server.services.UserService
 
-class BaseRestController {
+abstract class BaseRestController {
 
-    private val logger = LoggerFactory.getLogger(this::class.java)
+    protected val logger = LoggerFactory.getLogger(this::class.java)
 
     @Autowired
     protected lateinit var securityService: SecurityService
