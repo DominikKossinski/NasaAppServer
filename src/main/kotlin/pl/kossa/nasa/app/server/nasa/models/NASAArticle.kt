@@ -6,7 +6,7 @@ import java.util.*
 data class NASAArticle(
     val date: Date,
     val explanation: String,
-    val hdurl: String,
+    val hdurl: String?,
     @SerializedName("media_type")
     val mediaType: NASAMediaType,
     val title: String,

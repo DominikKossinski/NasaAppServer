@@ -17,15 +17,15 @@ data class Article(
     val date: Date,
     @Column(name = "explanation", columnDefinition = "varchar(2000)")
     val explanation: String,
-    @Column(name = "hdurl", columnDefinition = "varchar(500)")
-    val hdurl: String,
+    @Column(name = "hdurl", columnDefinition = "varchar(500)", nullable = true)
+    val hdurl: String?,
     @Column(name = "mediaType", columnDefinition = "varchar(100)")
     val mediaType: NasaMediaType,
     @Column(name = "title", columnDefinition = "varchar(500)")
     val title: String,
     @Column(name = "url", columnDefinition = "varchar(500)")
     val url: String,
-    @Column(name = "copyright", columnDefinition = "varchar(500)")
+    @Column(name = "copyright", columnDefinition = "varchar(500)", nullable = true)
     val copyright: String?
 ) {
 
