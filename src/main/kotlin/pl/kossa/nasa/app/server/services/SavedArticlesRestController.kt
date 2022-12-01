@@ -6,9 +6,12 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import pl.kossa.nasa.app.server.architecture.BaseRestController
+import pl.kossa.nasa.app.server.data.requests.SaveArticleRequest
 import pl.kossa.nasa.app.server.db.data.Article
 import retrofit2.http.GET
 import java.util.*
@@ -26,6 +29,12 @@ class SavedArticlesRestController : BaseRestController() {
         val user = getUserDetails()
         val savedArticles = savedArticleService.getByUserId(user.id)
         return savedArticles.map { it.article }
+    }
+
+    @PostMapping
+    suspend fun postSavedArticleByDate(@RequestBody request: SaveArticleRequest) {
+        val user = getUserDetails()
+        savedArticleService.save(user.id, request.date)
     }
 
     @DeleteMapping("/{date}")
