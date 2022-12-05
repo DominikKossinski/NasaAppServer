@@ -6,5 +6,5 @@ import java.util.Date
 
 interface ArticleCommentRepository : CrudRepository<ArticleComment, Int> {
 
-    fun getAllByArticleDate(articleDate: Date): List<ArticleComment>
+    suspend fun findAllByArticleDate(articleDate: Date): List<ArticleComment>
 }
