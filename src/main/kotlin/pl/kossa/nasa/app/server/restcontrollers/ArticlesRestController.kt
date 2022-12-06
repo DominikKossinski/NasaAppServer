@@ -13,15 +13,19 @@ import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.kossa.nasa.app.server.architecture.BaseRestController
+import pl.kossa.nasa.app.server.data.requests.ArticleCommentRequest
 import pl.kossa.nasa.app.server.db.data.Article
 import pl.kossa.nasa.app.server.db.data.NasaMediaType
 import pl.kossa.nasa.app.server.errors.NotFoundError
 import pl.kossa.nasa.app.server.errors.UnauthorizedError
 import pl.kossa.nasa.app.server.extensions.toApiString
+import pl.kossa.nasa.app.server.services.ArticleCommentService
 import pl.kossa.nasa.app.server.services.ArticlesService
 import java.util.*
 
@@ -31,6 +35,9 @@ class ArticlesRestController : BaseRestController() {
 
     @Autowired
     private lateinit var articlesService: ArticlesService
+
+    @Autowired
+    private lateinit var commentService: ArticleCommentService
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ApiResponses(
@@ -68,5 +75,14 @@ class ArticlesRestController : BaseRestController() {
     )
     suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date): Article {
         return articlesService.getArticleByDate(date)
+    }
+
+    @PostMapping("/{date}/comment")
+    suspend fun commentArticle(
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date,
+        @RequestBody commentRequest: ArticleCommentRequest
+    ) {
+        val user = getUserDetails()
+        commentService.saveComment(date, commentRequest.comment, user.id)
     }
 }
