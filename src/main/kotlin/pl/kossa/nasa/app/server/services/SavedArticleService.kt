@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import pl.kossa.nasa.app.server.db.data.SavedArticle
 import pl.kossa.nasa.app.server.db.repositories.SavedArticleRepository
+import pl.kossa.nasa.app.server.exceptions.ArticleAlreadySavedException
 import pl.kossa.nasa.app.server.exceptions.NotFoundException
 import java.util.*
 
@@ -25,13 +26,11 @@ class SavedArticleService {
 
     suspend fun save(userId: String, date: Date): SavedArticle {
         val user = userService.getUserById(userId) ?: throw NotFoundException("User not found")
-        println( "Date: $date")
         val savedArticle = savedArticleRepository.findByUserIdAndDate(userId, date)
         if (savedArticle != null) {
-            throw Exception() // TODO
+            throw ArticleAlreadySavedException(date)
         }
         val article = articlesService.getArticleByDate(date)
-        println("Article: $article")
         return savedArticleRepository.save(SavedArticle(0, article, user))
     }
 
