@@ -3,17 +3,14 @@ package pl.kossa.nasa.app.server.db.data
 import pl.kossa.nasa.app.server.nasa.models.NASAArticle
 import pl.kossa.nasa.app.server.nasa.models.NASAMediaType
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 
 @Entity
 @Table(name = "Articles")
 data class Article(
     @Id
-    @Column(name = "date", columnDefinition = "timestamp")
+    @Temporal(TemporalType.DATE)
     val date: Date,
     @Column(name = "explanation", columnDefinition = "varchar(2000)")
     val explanation: String,
