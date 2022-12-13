@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service
 import pl.kossa.nasa.app.server.db.data.Article
 import pl.kossa.nasa.app.server.db.repositories.ArticlesRepository
 import pl.kossa.nasa.app.server.exceptions.NotFoundException
+import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.Date
 
@@ -22,9 +23,9 @@ class ArticlesService {
     @Autowired
     protected lateinit var nasaArticlesService: NASAArticlesService
 
-    suspend fun getArticlesByPage(from: Date, to: Date): List<Article> {
+    suspend fun getArticlesByPage(from: LocalDate, to: LocalDate): List<Article> {
         val articles = articlesRepository.findAllBetween(from, to)
-        if (articles.size != (ChronoUnit.DAYS.between(from.toInstant(), to.toInstant()) + 1).toInt()) {
+        if (articles.size != (ChronoUnit.DAYS.between(from, to) + 1).toInt()) {
             val nasaArticles = nasaArticlesService.getArticlesByDateRange(from, to)
             val mappedArticles = nasaArticles.map { Article.fromNASAArticle(it) }
             return articlesRepository.saveAll(mappedArticles).toList()
@@ -32,13 +33,13 @@ class ArticlesService {
         return articles
     }
 
-    suspend fun getArticleByDate(date: Date): Article {
-        val dbArticle = articlesRepository.findById(date)
-        if (dbArticle.isEmpty) {
+    suspend fun getArticleByDate(date: LocalDate): Article {
+        val dbArticle = articlesRepository.findByIdOrNull(date)
+        if (dbArticle == null) {
             val nasaArticle = nasaArticlesService.getArticleByDate(date)
                 ?: throw NotFoundException("Article from date $date not found")
             return articlesRepository.save(Article.fromNASAArticle(nasaArticle))
         }
-        return dbArticle.get()
+        return dbArticle
     }
 }

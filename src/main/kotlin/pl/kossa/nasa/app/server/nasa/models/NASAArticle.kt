@@ -1,6 +1,7 @@
 package pl.kossa.nasa.app.server.nasa.models
 
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDate
 import java.util.*
 
 data class NASAArticle(

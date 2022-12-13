@@ -6,6 +6,8 @@ import pl.kossa.nasa.app.server.db.data.SavedArticle
 import pl.kossa.nasa.app.server.db.repositories.SavedArticleRepository
 import pl.kossa.nasa.app.server.exceptions.ArticleAlreadySavedException
 import pl.kossa.nasa.app.server.exceptions.NotFoundException
+import pl.kossa.nasa.app.server.exceptions.SavedArticleNotFoundException
+import java.time.LocalDate
 import java.util.*
 
 @Service("SavedArticleService")
@@ -24,7 +26,7 @@ class SavedArticleService {
         return savedArticleRepository.findAllByUserId(userId)
     }
 
-    suspend fun save(userId: String, date: Date): SavedArticle {
+    suspend fun save(userId: String, date: LocalDate): SavedArticle {
         val user = userService.getUserById(userId) ?: throw NotFoundException("User not found")
         val savedArticle = savedArticleRepository.findByUserIdAndDate(userId, date)
         if (savedArticle != null) {
@@ -34,6 +36,9 @@ class SavedArticleService {
         return savedArticleRepository.save(SavedArticle(0, article, user))
     }
 
-    suspend fun deleteByUserIdAndDate(userId: String, date: Date) =
-        savedArticleRepository.deleteByUserIdAndArticleDate(userId, date)
+    suspend fun deleteByUserIdAndDate(userId: String, date: LocalDate) {
+        val savedArticle =
+            savedArticleRepository.findByUserIdAndDate(userId, date) ?: throw SavedArticleNotFoundException(date)
+        savedArticleRepository.delete(savedArticle)
+    }
 }
