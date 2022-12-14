@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import pl.kossa.nasa.app.server.errors.ForbiddenError
-import pl.kossa.nasa.app.server.errors.NotFoundError
-import pl.kossa.nasa.app.server.errors.UnauthorizedError
+import pl.kossa.nasa.app.server.errors.*
 
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -34,5 +32,21 @@ class RestExceptionsHandler {
         notFoundException: NotFoundException
     ): ResponseEntity<NotFoundError> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(NotFoundError(notFoundException.message ?: ""))
+    }
+
+    @ExceptionHandler(ArticleAlreadySavedException::class)
+    fun handleArticleAlreadySavedException(
+        articleAlreadySavedException: ArticleAlreadySavedException
+    ): ResponseEntity<ArticleAlreadySavedError> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+            .body(ArticleAlreadySavedError(articleAlreadySavedException.message ?: ""))
+    }
+
+    @ExceptionHandler(SavedArticleNotFoundException::class)
+    fun handleSavedArticleNotFoundException(
+        savedArticleNotFoundException: SavedArticleNotFoundException
+    ): ResponseEntity<SavedArticleNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(SavedArticleNotFoundError(savedArticleNotFoundException.message ?: ""))
     }
 }

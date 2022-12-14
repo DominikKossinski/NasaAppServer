@@ -1,5 +1,6 @@
 package pl.kossa.nasa.app.server.nasa
 
+import com.google.gson.GsonBuilder
 import pl.kossa.nasa.app.server.nasa.call.ApiResponseAdapterFactory
 import okhttp3.OkHttpClient
 import org.springframework.context.annotation.Bean
@@ -18,11 +19,14 @@ class NasaApiModule {
 
     @Bean
     fun retrofit(client: OkHttpClient): Retrofit {
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd")
+            .create()
         return Retrofit.Builder()
             .client(client)
             .baseUrl(System.getenv("NASA_API_URL"))
             .addCallAdapterFactory(ApiResponseAdapterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 

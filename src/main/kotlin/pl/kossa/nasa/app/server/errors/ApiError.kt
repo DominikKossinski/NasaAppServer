@@ -21,7 +21,17 @@ class ForbiddenError : ApiError() {
         get() = "Forbidden"
 }
 
-class NotFoundError(override val description: String): ApiError() {
+class NotFoundError(override val description: String) : ApiError() {
     override val message: String
         get() = "NotFound"
+}
+
+class SavedArticleNotFoundError(override val description: String) : ApiError() {
+    override val message: String
+        get() = "SavedArticleNotFound"
+}
+
+class ArticleAlreadySavedError(override val description: String) : ApiError() {
+    override val message: String
+        get() = "ArticleAlreadySavedError"
 }
