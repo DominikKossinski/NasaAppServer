@@ -6,9 +6,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import pl.kossa.nasa.app.server.errors.ForbiddenError
-import pl.kossa.nasa.app.server.errors.NotFoundError
-import pl.kossa.nasa.app.server.errors.UnauthorizedError
+import pl.kossa.nasa.app.server.errors.*
 
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -34,5 +32,21 @@ class RestExceptionsHandler {
         notFoundException: NotFoundException
     ): ResponseEntity<NotFoundError> {
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(NotFoundError(notFoundException.message ?: ""))
+    }
+
+    @ExceptionHandler(UserNotFoundException::class)
+    fun handleUserNotFoundException(
+        userNotFoundException: UserNotFoundException
+    ): ResponseEntity<UserNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(UserNotFoundError(userNotFoundException.message ?: ""))
+    }
+
+    @ExceptionHandler(ArticleCommentNotFoundException::class)
+    fun handleArticleCommentNotFoundException(
+        articleCommentNotFoundException: ArticleCommentNotFoundException
+    ): ResponseEntity<ArticleCommentNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(ArticleCommentNotFoundError(articleCommentNotFoundException.message ?: ""))
     }
 }

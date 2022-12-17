@@ -2,8 +2,6 @@ package pl.kossa.nasa.app.server.db.repositories
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
-import org.springframework.data.repository.PagingAndSortingRepository
-import org.springframework.data.repository.query.Param
 import pl.kossa.nasa.app.server.db.data.Article
 import java.util.*
 
