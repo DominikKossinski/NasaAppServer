@@ -49,4 +49,20 @@ class RestExceptionsHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
             .body(ArticleCommentNotFoundError(articleCommentNotFoundException.message ?: ""))
     }
+
+    @ExceptionHandler(ArticleAlreadySavedException::class)
+    fun handleArticleAlreadySavedException(
+        articleAlreadySavedException: ArticleAlreadySavedException
+    ): ResponseEntity<ArticleAlreadySavedError> {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST.value())
+            .body(ArticleAlreadySavedError(articleAlreadySavedException.message ?: ""))
+    }
+
+    @ExceptionHandler(SavedArticleNotFoundException::class)
+    fun handleSavedArticleNotFoundException(
+        savedArticleNotFoundException: SavedArticleNotFoundException
+    ): ResponseEntity<SavedArticleNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(SavedArticleNotFoundError(savedArticleNotFoundException.message ?: ""))
+    }
 }

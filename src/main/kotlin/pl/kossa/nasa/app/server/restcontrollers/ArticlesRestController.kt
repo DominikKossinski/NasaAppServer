@@ -23,6 +23,7 @@ import pl.kossa.nasa.app.server.errors.NotFoundError
 import pl.kossa.nasa.app.server.errors.UnauthorizedError
 import pl.kossa.nasa.app.server.services.ArticleCommentService
 import pl.kossa.nasa.app.server.services.ArticlesService
+import java.time.LocalDate
 import java.util.*
 
 @RestController
@@ -47,8 +48,8 @@ class ArticlesRestController : BaseRestController() {
         ]
     )
     suspend fun getArticles(
-        @RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") from: Date,
-        @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") to: Date
+        @RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") from: LocalDate,
+        @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") to: LocalDate
     ): List<Article> {
         return articlesService.getArticlesByPage(from, to)
     }
@@ -69,7 +70,8 @@ class ArticlesRestController : BaseRestController() {
             )
         ]
     )
-    suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date): Article {
+    suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate): Article {
+        logger.info("Date: $date")
         return articlesService.getArticleByDate(date)
     }
 

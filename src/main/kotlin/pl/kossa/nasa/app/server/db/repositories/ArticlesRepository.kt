@@ -3,10 +3,10 @@ package pl.kossa.nasa.app.server.db.repositories
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import pl.kossa.nasa.app.server.db.data.Article
-import java.util.*
+import java.time.LocalDate
 
-interface ArticlesRepository : CrudRepository<Article, Date> {
-    @Query(value="select a from Article a where a.date BETWEEN ?1 AND ?2")
-    fun findAllBetween(from: Date, to: Date): List<Article>
+interface ArticlesRepository : CrudRepository<Article, LocalDate> {
+    @Query(value="select a from Article a where ?1 <= a.date AND a.date <= ?2")
+    fun findAllBetween(from: LocalDate, to: LocalDate): List<Article>
 
 }

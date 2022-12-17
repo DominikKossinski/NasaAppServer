@@ -14,6 +14,7 @@ import pl.kossa.nasa.app.server.architecture.BaseRestController
 import pl.kossa.nasa.app.server.data.requests.SaveArticleRequest
 import pl.kossa.nasa.app.server.db.data.Article
 import retrofit2.http.GET
+import java.time.LocalDate
 import java.util.*
 
 @RestController
@@ -38,7 +39,7 @@ class SavedArticlesRestController : BaseRestController() {
     }
 
     @DeleteMapping("/{date}")
-    suspend fun deleteSavedArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date) {
+    suspend fun deleteSavedArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate) {
         val user = getUserDetails()
         savedArticleService.deleteByUserIdAndDate(user.id, date)
     }
