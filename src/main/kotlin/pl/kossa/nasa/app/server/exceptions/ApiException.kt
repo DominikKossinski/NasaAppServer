@@ -13,4 +13,9 @@ class ForbiddenException : ApiException("Forbidden")
 class NotFoundException(message: String?) : ApiException(message)
 
 class SavedArticleNotFoundException(date: LocalDate) : ApiException("SavedArticle from ${date.toApiString()} not found")
+
 class ArticleAlreadySavedException(date: LocalDate) : ApiException("Article from ${date.toApiString()} already saved")
+
+class UserNotFoundException(userId: String) : ApiException("User with id $userId not found")
+
+class ArticleCommentNotFoundException(commentId: Int) : ApiException("Comment with id $commentId not found")

@@ -1,27 +1,27 @@
 package pl.kossa.nasa.app.server.restcontrollers
 
 import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
-import org.springframework.data.jpa.repository.Query
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import pl.kossa.nasa.app.server.architecture.BaseRestController
+import pl.kossa.nasa.app.server.data.requests.ArticleCommentRequest
 import pl.kossa.nasa.app.server.db.data.Article
-import pl.kossa.nasa.app.server.db.data.NasaMediaType
+import pl.kossa.nasa.app.server.db.data.ArticleComment
 import pl.kossa.nasa.app.server.errors.NotFoundError
 import pl.kossa.nasa.app.server.errors.UnauthorizedError
-import pl.kossa.nasa.app.server.extensions.toApiString
+import pl.kossa.nasa.app.server.services.ArticleCommentService
 import pl.kossa.nasa.app.server.services.ArticlesService
 import java.time.LocalDate
 import java.util.*
@@ -32,6 +32,9 @@ class ArticlesRestController : BaseRestController() {
 
     @Autowired
     private lateinit var articlesService: ArticlesService
+
+    @Autowired
+    private lateinit var commentService: ArticleCommentService
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
     @ApiResponses(
@@ -70,5 +73,31 @@ class ArticlesRestController : BaseRestController() {
     suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate): Article {
         logger.info("Date: $date")
         return articlesService.getArticleByDate(date)
+    }
+
+    @GetMapping("/{date}/comments")
+    suspend fun getArticleComments(
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date
+    ): List<ArticleComment> {
+        return commentService.getArticlesComments(date)
+    }
+
+    @PostMapping("/{date}/comments")
+    suspend fun postComment(
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
+        @RequestBody commentRequest: ArticleCommentRequest
+    ) {
+        val user = getUserDetails()
+        commentService.saveComment(date, commentRequest.comment, user.id)
+    }
+
+    @PutMapping("/{date}/comments/{commentId}")
+    suspend fun putComment(
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
+        @PathVariable("commentId") commentId: Int,
+        @RequestBody commentRequest: ArticleCommentRequest
+    ) {
+        val user = getUserDetails()
+        commentService.updateComment(date, commentId, commentRequest.comment, user.id)
     }
 }

@@ -26,6 +26,17 @@ class NotFoundError(override val description: String) : ApiError() {
         get() = "NotFound"
 }
 
+class UserNotFoundError(override val description: String) : ApiError() {
+
+    override val message: String
+        get() = "UserNotFound"
+}
+
+class ArticleCommentNotFoundError(override val description: String): ApiError() {
+    override val message: String
+        get() = "ArticleCommentNotFound"
+}
+
 class SavedArticleNotFoundError(override val description: String) : ApiError() {
     override val message: String
         get() = "SavedArticleNotFound"

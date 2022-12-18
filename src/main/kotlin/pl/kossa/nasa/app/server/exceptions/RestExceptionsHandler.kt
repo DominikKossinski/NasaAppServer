@@ -34,6 +34,22 @@ class RestExceptionsHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(NotFoundError(notFoundException.message ?: ""))
     }
 
+    @ExceptionHandler(UserNotFoundException::class)
+    fun handleUserNotFoundException(
+        userNotFoundException: UserNotFoundException
+    ): ResponseEntity<UserNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(UserNotFoundError(userNotFoundException.message ?: ""))
+    }
+
+    @ExceptionHandler(ArticleCommentNotFoundException::class)
+    fun handleArticleCommentNotFoundException(
+        articleCommentNotFoundException: ArticleCommentNotFoundException
+    ): ResponseEntity<ArticleCommentNotFoundError> {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND.value())
+            .body(ArticleCommentNotFoundError(articleCommentNotFoundException.message ?: ""))
+    }
+
     @ExceptionHandler(ArticleAlreadySavedException::class)
     fun handleArticleAlreadySavedException(
         articleAlreadySavedException: ArticleAlreadySavedException
