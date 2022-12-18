@@ -84,7 +84,7 @@ class ArticlesRestController : BaseRestController() {
 
     @PostMapping("/{date}/comments")
     suspend fun postComment(
-        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date,
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
         @RequestBody commentRequest: ArticleCommentRequest
     ) {
         val user = getUserDetails()
@@ -93,7 +93,7 @@ class ArticlesRestController : BaseRestController() {
 
     @PutMapping("/{date}/comments/{commentId}")
     suspend fun putComment(
-        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date,
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate,
         @PathVariable("commentId") commentId: Int,
         @RequestBody commentRequest: ArticleCommentRequest
     ) {
