@@ -1,5 +1,6 @@
 package pl.kossa.nasa.app.server.db.data
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import java.util.Date
 import javax.persistence.*
 
@@ -17,6 +18,7 @@ data class ArticleComment(
     @Column(name = "updatedAt", columnDefinition = "timestamp")
     val updatedAt: Date?,
     @ManyToOne
+    @JsonIgnore
     val article: Article,
     @ManyToOne
     val author: User

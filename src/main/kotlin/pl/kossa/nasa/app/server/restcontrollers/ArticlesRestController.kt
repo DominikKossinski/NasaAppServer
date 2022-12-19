@@ -71,7 +71,6 @@ class ArticlesRestController : BaseRestController() {
         ]
     )
     suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate): Article {
-        logger.info("Date: $date")
         return articlesService.getArticleByDate(date)
     }
 
