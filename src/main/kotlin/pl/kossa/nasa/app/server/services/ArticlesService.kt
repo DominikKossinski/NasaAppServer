@@ -25,10 +25,19 @@ class ArticlesService {
 
     suspend fun getArticlesByPage(from: LocalDate, to: LocalDate): List<Article> {
         val articles = articlesRepository.findAllBetween(from, to)
-        if (articles.size != (ChronoUnit.DAYS.between(from, to) + 1).toInt()) {
+        val days = (ChronoUnit.DAYS.between(from, to) + 1).toInt()
+        if (articles.size != days) {
             val nasaArticles = nasaArticlesService.getArticlesByDateRange(from, to)
             val mappedArticles = nasaArticles.map { Article.fromNASAArticle(it) }
-            return articlesRepository.saveAll(mappedArticles).toList()
+            if(nasaArticles.isEmpty()){
+                return articles
+            }
+            val saved = articlesRepository.saveAll(mappedArticles).toList()
+            return if (nasaArticles.size == days) {
+                saved
+            } else {
+                articlesRepository.findAllBetween(from, to)
+            }
         }
         return articles
     }
