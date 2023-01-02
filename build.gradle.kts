@@ -28,13 +28,13 @@ dependencies {
 	testImplementation("org.springframework.security:spring-security-test")
 
 	// Firebase Admin
-	implementation("com.google.firebase:firebase-admin:9.1.0")
+	implementation("com.google.firebase:firebase-admin:9.1.1")
 
 	//Swagger
-	implementation("org.springdoc:springdoc-openapi-ui:1.6.11")
-	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.12")
-	implementation("org.springdoc:springdoc-openapi-security:1.6.12")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.12")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.14")
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.14")
+	implementation("org.springdoc:springdoc-openapi-security:1.6.14")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.14")
 
 	// DB Drivers
 	runtimeOnly("mysql:mysql-connector-java:8.0.30")
