@@ -41,7 +41,7 @@ class ArticleCommentService {
         )
     }
 
-    suspend fun getArticlesComments(articleDate: Date): List<ArticleComment> {
+    suspend fun getArticlesComments(articleDate: LocalDate): List<ArticleComment> {
         return articleCommentRepository.findAllByArticleDate(articleDate)
     }
 }

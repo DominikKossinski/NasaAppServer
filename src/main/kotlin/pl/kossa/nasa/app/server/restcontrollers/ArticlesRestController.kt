@@ -71,13 +71,12 @@ class ArticlesRestController : BaseRestController() {
         ]
     )
     suspend fun getArticleByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate): Article {
-        logger.info("Date: $date")
         return articlesService.getArticleByDate(date)
     }
 
     @GetMapping("/{date}/comments")
     suspend fun getArticleComments(
-        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: Date
+        @PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") date: LocalDate
     ): List<ArticleComment> {
         return commentService.getArticlesComments(date)
     }
