@@ -29,15 +29,11 @@ class ArticlesService {
         if (articles.size != days) {
             val nasaArticles = nasaArticlesService.getArticlesByDateRange(from, to)
             val mappedArticles = nasaArticles.map { Article.fromNASAArticle(it) }
-            if(nasaArticles.isEmpty()){
+            if (nasaArticles.isEmpty()) {
                 return articles
             }
-            val saved = articlesRepository.saveAll(mappedArticles).toList()
-            return if (nasaArticles.size == days) {
-                saved
-            } else {
-                articlesRepository.findAllBetween(from, to)
-            }
+            articlesRepository.saveAll(mappedArticles).toList()
+            return articlesRepository.findAllBetween(from, to)
         }
         return articles
     }
